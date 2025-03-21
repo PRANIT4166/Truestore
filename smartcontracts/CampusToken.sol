@@ -1,7 +1,4 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.23;
-
-// SPDX-License-Identifier: MIT
 // Compatible with OpenZeppelin Contracts ^5.0.0
 pragma solidity ^0.8.22;
 
