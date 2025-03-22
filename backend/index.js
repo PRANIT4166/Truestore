@@ -6,6 +6,8 @@ const { checkAndFetchUser } = require("./UserData");
 const cors = require("cors");
 const { ethers } = require("ethers"); // added ethers
 const path = require("path");
+const multer = require("multer");
+
 
 const app = express();
 
@@ -16,12 +18,12 @@ app.use(express.json());
 app.use(cors()) 
 
 const RPC_URL = process.env.RPC_URL;
-const provider = new ethers.providers.JsonRpcProvider(RPC_URL); //RPC PROVIDER URL
-const CAMPUS_TOKEN_ADDRESS = process.env.CAMPUS_TOKEN_ADDRESS; 
-const PARTICIPATE_ADDRESS = process.env.PARTICIPATE_ADDRESS; 
+// const provider = new ethers.providers.JsonRpcProvider(RPC_URL); //RPC PROVIDER URL
+// const CAMPUS_TOKEN_ADDRESS = process.env.CAMPUS_TOKEN_ADDRESS; 
+// const PARTICIPATE_ADDRESS = process.env.PARTICIPATE_ADDRESS; 
 
-const campusTokenABI = require(path.join(__dirname, "abis", "CampusToken.json"));
-const participateABI = require(path.join(__dirname, "abis", "Participate.json"));
+// const campusTokenABI = require(path.join(__dirname, "abis", "CampusToken.json"));
+// const participateABI = require(path.join(__dirname, "abis", "Participate.json"));
 
 
 // const router = express.Router();
@@ -55,6 +57,10 @@ const upload = multer({dest : "uploads/"});
 
 // Upload Route
 app.post("/upload",upload.single("file"), async (req, res) => {
+
+    console.log("🔥 Upload request received!");
+    console.log("Body:", req.body);  // ✅ Log form fields
+    console.log("File:", req.file);  
     try {
         if (!req.file) {
             return res.status(400).json({ success: false, error: "file required" });
@@ -62,11 +68,14 @@ app.post("/upload",upload.single("file"), async (req, res) => {
 
         const submittedBy = req.body.submittedBy;
         const filePath = req.file.path; 
-        const fileHash = await storage.uploadToIPFS(filePath, submittedBy || "unknown_user");
+        // const fileHash = await storage.uploadToIPFS(filePath, submittedBy || "unknown_user");
+        const report_id = await storage.uploadToIPFS(filePath, submittedBy || "unknown_user");
 
-        fs.unlinkSync(filePath);//delete temp file 
 
-        res.json({ success: true, fileHash });
+        //fs.unlinkSync(filePath);//delete temp file 
+
+
+        res.json({ success: true, report_id });
     } catch (error) {
         console.error("Upload failed:", error);
         res.status(500).json({ success: false, error: error.message || "Upload failed" });
