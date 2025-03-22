@@ -1,8 +1,7 @@
-import { useEffect, useState } from "react";
 import { auth, logout } from "../firebase";
-import { onAuthStateChanged, User } from "firebase/auth";
-import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 import "../styles.css";
+import { useUser } from "../uderContext";
 
 import homeicon from '../images/home.png'
 import valicon from '../images/report.png'
@@ -10,19 +9,32 @@ import val2icon from '../images/validate.png'
 
 
 const Report = () => {
-  const [user, setUser] = useState<User | null>(null);
-  const navigate = useNavigate();
+  const { userData } = useUser();
+  const [vehicleId, setVehicleId] = useState("");
+  const [location, setLocation] = useState("");
+  const [description, setDescription] = useState("");
+  const [file, setFile] = useState<File | null>(null);
 
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      if (!currentUser) {
-        navigate("/login");
-      } else {
-        setUser(currentUser);
-      }
-    });
-    return () => unsubscribe();
-  }, [navigate]);
+  // Handle File Selection
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files && event.target.files.length > 0) {
+      setFile(event.target.files[0]);
+    }
+  };
+
+  // Handle Form Submission
+  const handleSubmit = (event: React.FormEvent) => {
+    event.preventDefault();
+
+    // 🚀 Implement API call to upload data
+    console.log("Submitting Report:", { vehicleId, location, description, file });
+
+    // Reset form after submission
+    setVehicleId("");
+    setLocation("");
+    setDescription("");
+    setFile(null);
+  };
 
   return (
     <div className="dashboard-container">
@@ -30,24 +42,62 @@ const Report = () => {
       <aside className="sidebar">
         <h2>Dashboard</h2>
         <ul className="nav-links">
-          <li><a href="/home" ><img src={homeicon} alt="Home" className="sidebar-icon"/> Home</a></li>
-          <li><a href="/report"><img src={valicon} alt="Home" className="sidebar-icon"/> Report</a></li>
-          <li><a href="/validate"><img src={val2icon} alt="validate" className="sidebar-icon"/> Validate</a></li>
+          <li><a href="/home"><img src={homeicon} alt="Home" className="sidebar-icon" /> Home</a></li>
+          <li><a href="/report"><img src={valicon} alt="Report" className="sidebar-icon" /> Report</a></li>
+          <li><a href="/validate"><img src={val2icon} alt="Validate" className="sidebar-icon" /> Validate</a></li>
         </ul>
         <button onClick={logout} className="logout-btn">Logout</button>
       </aside>
 
       {/* Main Dashboard */}
       <main className="dashboard">
-        <h1>Welcome, {user?.displayName || "User"}</h1>
-        
+        <div className="welcome-container">
+          <h1>Welcome, {userData?.name || "User"} 👋</h1>
+          <p className="token">Token Balance: {userData?.tokens}</p>
+        </div>
 
-        {/* Dashboard Grid */}
-        <div className="dashboard-grid">
-            <div className="card-report">
-            <h3>Report an incident</h3>
-            <p></p>
-            </div>
+        {/* 🚀 Report Incident Form */}
+        <div className="card-report">
+          <h3>📢 Report an Incident</h3>
+          <form onSubmit={handleSubmit}>
+            {/* Vehicle ID */}
+            <input 
+              type="text" 
+              placeholder="Vehicle ID" 
+              value={vehicleId} 
+              onChange={(e) => setVehicleId(e.target.value)} 
+              required 
+            />
+
+            {/* Location */}
+            <input 
+              type="text" 
+              placeholder="Location" 
+              value={location} 
+              onChange={(e) => setLocation(e.target.value)} 
+              required 
+            />
+
+            {/* Description */}
+            <input
+              placeholder="Description" 
+              value={description} 
+              onChange={(e) => setDescription(e.target.value)} 
+              required 
+            />
+
+            {/* File Upload */}
+            <input 
+              type="file" 
+              accept="image/*,video/*" 
+              onChange={handleFileChange} 
+              required
+            />
+            {file && <p>Selected file: {file.name}</p>}
+
+            {/* Submit Button */}
+            <button type="submit" className="submit-btn">Submit Report</button>
+          </form>
         </div>
       </main>
     </div>

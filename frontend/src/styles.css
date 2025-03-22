@@ -153,7 +153,7 @@ body {
 }
 
 /* 📊 Dashboard Cards */
-.card {
+.card-home {
   background: linear-gradient(145deg, #0a008f, #86000d);
   padding: 1.5rem;
   border-radius: 12px;
@@ -166,18 +166,64 @@ body {
   text-align: center;
   transition: all 0.3s ease-in-out;
 }
+.card {
+  background: linear-gradient(145deg, #0a008f, #86000d);
+  padding: 1.5rem;
+  border-radius: 12px;
+  border-style: outset;
+  border-color: #ffffff;
+  height: 370%;
+
+
+  box-shadow: 0 2px 15px rgba(153, 0, 255, 0.719);
+  text-align: center;
+  transition: all 0.3s ease-in-out;
+}
 .card-report {
   background: linear-gradient(145deg, #0a008f, #86000d);
   padding: 1.5rem;
   border-radius: 12px;
   border-style: outset;
   border-color: #ffffff;
-  height: 770%;
+  height: 80%;
+
 
 
   box-shadow: 0 2px 15px rgba(153, 0, 255, 0.719);
   text-align: center;
   transition: all 0.3s ease-in-out;
+}
+.card-report input, .card-report textarea {
+  width: 100%;
+  padding: 15px;
+  margin: 20px 0;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font : "Arial"
+}
+
+/* 📎 File Upload */
+.card-report input[type="file"] {
+  background: white;
+  padding: 10px;
+  cursor: pointer;
+}
+
+/* 🚀 Submit Button */
+.submit-btn {
+  background-color: #9100be;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.submit-btn:hover {
+  background-color: #ff4268;
 }
 
 /* Card Hover Effect */
@@ -195,6 +241,7 @@ body {
   cursor: pointer;
   transition: background 0.3s ease-in-out;
   text-align: center;
+  font-size: medium;
 }
 
 .logout-btn:hover {
@@ -242,6 +289,12 @@ body {
   font-size: 1.5rem;
   color: #dedede; /* Light gray for subtle look */
   margin-top: 5px;
+}
+.welcome-container p.token {
+  font-size: 1.5rem;
+  color: #dedede; /* Light gray for subtle look */
+  margin-top: 5px;
+  padding-bottom: 10px;
 }
 
 /* 📊 Overview Text */

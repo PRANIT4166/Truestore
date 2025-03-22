@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { auth, logout } from "../firebase";
 import { onAuthStateChanged, User } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
+import { useUser } from "../uderContext";
 import axios from "axios";
 
 import "../styles.css";
@@ -12,33 +13,38 @@ import val2icon from '../images/validate.png'
 
 
 const Home = () => {
+  const { userData, setUserData } = useUser();
   const [user, setUser] = useState<User | null>(null);
-  const [userData, setUserData] = useState<any>(null);
   const navigate = useNavigate();
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+    const fetchUser = async (currentUser: User | null) => {
       if (!currentUser) {
-        navigate("/login");
-      } else {
-        setUser(currentUser);
-        axios
-        .post("http://localhost:5000/api/user", {
-          user_id: currentUser.uid,
-          name: currentUser.displayName,
-          role: "user",
-          email: currentUser.email
-        })
-        .then((response) => {
-          console.log("Fetched User Data:", response.data);
-          setUserData(response.data);
-        })
-        .catch((error) => {
-          console.error("❌ Error fetching user data:", error);
-        });
-        
+        navigate("/");
+        return;
       }
+
+      setUser(currentUser);
+
+      axios.post("http://localhost:5000/api/user", {
+        user_id: currentUser.uid,
+        name: currentUser.displayName,
+        role: "user",
+        email: currentUser.email,
+      })
+      .then((response) => {
+        console.log("Fetched User Data:", response.data);
+        setUserData(response.data); // ✅ Store globally in React Context
+      })
+      .catch((error) => {
+        console.error("❌ Error fetching user data:", error);
+      });
+    };
+
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      fetchUser(currentUser);
     });
+
     return () => unsubscribe();
   }, [navigate]);
 
@@ -71,17 +77,17 @@ const Home = () => {
 
         {/* Dashboard Grid */}
         <div className="dashboard-grid">
-          <div className="card">
+          <div className="card-home">
             <div className="stats">
               <h3>📈 Stats</h3>
               <p className="tokens">Your Tokens: {userData?.tokens}</p>
             </div>
           </div>
-          <div className="card">
+          <div className="card-home">
             <h3>🔔 Notifications</h3>
             <p>Check your latest alerts.</p>
           </div>
-          <div className="card">
+          <div className="card-home">
             <h3>⚙️ Settings</h3>
             <p>Customize your experience.</p>
           </div>
