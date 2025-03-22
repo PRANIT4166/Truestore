@@ -5,6 +5,7 @@ import { useUser } from "../uderContext";
 import axios from "axios";
 
 
+
 import homeicon from '../images/home.png'
 import valicon from '../images/report.png'
 import val2icon from '../images/validate.png'
@@ -33,12 +34,23 @@ const Report = () => {
     // try {
       const formData = new FormData();
       formData.append("file", file || "no_file"); // ✅ Attach the file
-      formData.append("submittedBy", userData?.name || "unknown_user");
+      formData.append("submittedBy", userData?.user_id || "unknown_user");
       try {
         const response = await axios.post("http://localhost:5000/upload", formData, {
           headers: {
             "Content-Type": "multipart/form-data", // ✅ Important for file uploads
           },
+
+          
+          
+        });
+
+        console.log("check id", response.data);
+        await axios.post("http://localhost:5000/api/report/details", {
+          report_id: response.data.report_id,
+          vehicle_id: vehicleId,
+          location,
+          description,
         });
     
         console.log("✅ Report Uploaded:", response.data);
@@ -53,7 +65,9 @@ const Report = () => {
         alert("Upload failed. Check console for details.");
       }
 
-    // add to report( vi,location,de, sub by)
+      
+
+    // 
 
     // Reset form after submission
     setVehicleId("");

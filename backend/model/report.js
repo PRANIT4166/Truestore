@@ -6,7 +6,8 @@ const ReportSchema = new mongoose.Schema({
   metadata: {
     loc: { type: String },
     time: { type: Date },
-    vehicle: { type: String }
+    vehicle: { type: String },
+    desc: {type: String, default : "Null"}
   },
   status: { type: String, enum: ["pending", "verified", "rejected"], default: "pending" },
   submitted_by: { type: mongoose.Schema.Types.String, ref: "User" },

@@ -7,6 +7,7 @@ const cors = require("cors");
 const { ethers } = require("ethers"); // added ethers
 const path = require("path");
 const multer = require("multer");
+const { addDetails } = require("./ReportData");
 
 
 const app = express();
@@ -81,6 +82,22 @@ app.post("/upload",upload.single("file"), async (req, res) => {
         res.status(500).json({ success: false, error: error.message || "Upload failed" });
     }
 });
+
+app.post("/api/report/details", async (req, res) => {
+    try {
+      const { report_id, vehicle_id, location, description } = req.body;
+  
+      if (!report_id || !vehicle_id || !location || !description) {
+        return res.status(400).json({ success: false, error: "All fields are required." });
+      }
+  
+      const updatedReport = await addDetails(report_id, vehicle_id, location, description);
+      res.json({ success: true, report: updatedReport });
+    } catch (error) {
+      console.error("❌ Error updating report:", error.message);
+      res.status(500).json({ success: false, error: "Failed to update report." });
+    }
+  });
 
 // Start Server
 const PORT = process.env.PORT || 5000;
