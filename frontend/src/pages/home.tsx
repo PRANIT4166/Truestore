@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { auth, logout } from "../firebase";
 import { onAuthStateChanged, User } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+
 import "../styles.css";
 
 import homeicon from '../images/home.png'
@@ -11,6 +13,7 @@ import val2icon from '../images/validate.png'
 
 const Home = () => {
   const [user, setUser] = useState<User | null>(null);
+  const [userData, setUserData] = useState<any>(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -19,14 +22,27 @@ const Home = () => {
         navigate("/login");
       } else {
         setUser(currentUser);
+        try {
+          const response =  axios.post("http://localhost:5000/api/user", {
+            uid: currentUser.uid, // Use Firebase UID
+            name: currentUser.displayName,
+            role : "User"
+          });
+
+          setUserData(response);
+        } catch (error) {
+          console.error("Error fetching user data:", error);
+        }
+
+        
       }
     });
     return () => unsubscribe();
   }, [navigate]);
 
-  const id = (user?.email || null);
-
   
+
+
 
   return (
     <div className="dashboard-container">
