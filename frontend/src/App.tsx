@@ -6,17 +6,22 @@ import Validate from "./components/Valideate"; // Create this page next
  // Create this page next
 
 
-function App() {
-  return (
+ import { UserProvider } from "./uderContext";
+
+ function App() {
+   return (
+    <UserProvider>
     <Router>
       <Routes>
-        <Route path="/login" element={<Login />} />
+        <Route path="/" element={<Login />} />
         <Route path="/home" element={<Home />} />
         <Route path="/report" element={<Report />} />
         <Route path="/validate" element={<Validate />} />
       </Routes>
     </Router>
-  );
-}
-
-export default App;
+  </UserProvider>
+   );
+ }
+ 
+ export default App;
+ 
