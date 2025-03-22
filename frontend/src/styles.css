@@ -159,7 +159,7 @@ body {
   border-radius: 12px;
   border-style: outset;
   border-color: #ffffff;
-  height: 570%;
+  height: 240%;
 
 
   box-shadow: 0 2px 15px rgba(153, 0, 255, 0.719);
@@ -250,4 +250,15 @@ body {
   color: #aa00ff; /* Pinkish tone */
   margin-top: 10px;
   font-weight: 500;
+}
+
+.stats h3 {
+  font-size: 1.5rem;
+  color: #ffffff; /* Light gray for subtle look */
+  margin-top: 5px;
+}
+.stats p.tokens {
+  font-size: 1.5rem;
+  color: #ffffff; /* Light gray for subtle look */
+  margin-top: 100px;
 }

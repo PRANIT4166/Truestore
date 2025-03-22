@@ -72,8 +72,10 @@ const Home = () => {
         {/* Dashboard Grid */}
         <div className="dashboard-grid">
           <div className="card">
-            <h3>📈 Stats</h3>
-            <p>your Tokens: {userData?.tokens}</p>
+            <div className="stats">
+              <h3>📈 Stats</h3>
+              <p className="tokens">Your Tokens: {userData?.tokens}</p>
+            </div>
           </div>
           <div className="card">
             <h3>🔔 Notifications</h3>
