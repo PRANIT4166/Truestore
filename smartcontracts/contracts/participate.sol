@@ -43,7 +43,7 @@ contract participate {
         newReport.validated = false;
     }
 
-    function validate(uint256 reportId, int8 vote) external {
+    function validate(uint256 reportId, int8 vote) external { // we'll get reportId and vote from the database through backend 
         Report storage reportData = reports[reportId]; // Renamed variable to `reportData`
 
         require(token.balanceOf(msg.sender) >= VALIDATE_STAKE, "Insufficient stake"); // checks if he has enough tokens
@@ -52,7 +52,7 @@ contract participate {
 
         // stake tokens 
         stakedTokens[msg.sender] += VALIDATE_STAKE;
-        token.burnTokens(msg.sender, VALIDATE_STAKE);
+        token.burnTokens(msg.sender, VALIDATE_STAKE); // this should get reflected in the database 
 
         uint256 weight = getVoteWeight(msg.sender);
         reportData.net_votes += int256(vote * int256(weight)); // Signed int because of negative votes
@@ -86,6 +86,9 @@ contract participate {
             }
             stakedTokens[validator] -= VALIDATE_STAKE;
         }
+
+
+
     }
 
     function _negoutcome(uint256 reportId) internal {
@@ -99,21 +102,28 @@ contract participate {
             }
             stakedTokens[validator] -= VALIDATE_STAKE;
         }
+
+
     }
 
-    function finalizeReport(uint256 reportId) external {
+ 
+
+    function finalizeReport(uint256 reportId)  external   {   // add returns bool
         Report storage reportData = reports[reportId]; // report gets stored in the blockchain
 
         require(!reportData.validated, "Already validated");
         reportData.validated = true;
 
+        stakedTokens[reportData.uploader] -= REPORT_STAKE;
         if (reportData.net_votes > 0) { // implement net_votes == 0
             _posoutcome(reportId);
+        // return a bool for report scheme verified
+        
         } else {
             _negoutcome(reportId);
+           // return a bool for report scheme rejected
         }
 
-        stakedTokens[reportData.uploader] -= REPORT_STAKE;
     }
 
     function revoke_vote(uint256 reportId) external {

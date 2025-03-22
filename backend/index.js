@@ -20,8 +20,9 @@ const provider = new ethers.providers.JsonRpcProvider(RPC_URL); //RPC PROVIDER U
 const CAMPUS_TOKEN_ADDRESS = process.env.CAMPUS_TOKEN_ADDRESS; 
 const PARTICIPATE_ADDRESS = process.env.PARTICIPATE_ADDRESS; 
 
-const campusTokenABI = require(path.join(__dirname, "abis", "CampusToken.json"));
-const participateABI = require(path.join(__dirname, "abis", "Participate.json"));
+const campusTokenABI = require(path.join(__dirname, "artifacts", "contracts", "CampusToken.sol","CampusToken.json"));
+const participateABI = require(path.join(__dirname, "artifacts", "contracts","participate.sol","participate.json"));
+
 
 
 // const router = express.Router();
