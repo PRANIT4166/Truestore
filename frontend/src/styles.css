@@ -166,6 +166,19 @@ body {
   text-align: center;
   transition: all 0.3s ease-in-out;
 }
+.card-report {
+  background: linear-gradient(145deg, #0a008f, #86000d);
+  padding: 1.5rem;
+  border-radius: 12px;
+  border-style: outset;
+  border-color: #ffffff;
+  height: 770%;
+
+
+  box-shadow: 0 2px 15px rgba(153, 0, 255, 0.719);
+  text-align: center;
+  transition: all 0.3s ease-in-out;
+}
 
 /* Card Hover Effect */
 .card:hover {

@@ -45,39 +45,39 @@ const Validate = () => {
         {/* Dashboard Grid */}
         <div className="dashboard-grid">
             <div className="card">
-            <h3>📈 Stats</h3>
-            <p>See your analytics in detail.</p>
+            <h3>Video #</h3>
+            <p>incident x.</p>
             </div>
             <div className="card">
-            <h3>🔔 Notifications</h3>
-            <p>Check your latest alerts.</p>
+            <h3>Video #</h3>
+            <p>incident y</p>
             </div>
             <div className="card">
-            <h3>⚙️ Settings</h3>
-            <p>Customize your experience.</p>
+            <h3>Video #</h3>
+            <p>incident z</p>
             </div>
             <div className="card">
-            <h3>📈 Stats</h3>
-            <p>See your analytics in detail.</p>
+            <h3>Video #</h3>
+            <p>incident x.</p>
             </div>
             <div className="card">
-            <h3>🔔 Notifications</h3>
-            <p>Check your latest alerts.</p>
+            <h3>Video #</h3>
+            <p>incident y</p>
             </div>
             <div className="card">
-            <h3>⚙️ Settings</h3>
-            <p>Customize your experience.</p>
+            <h3>Video #</h3>
+            <p>incident z</p>
             </div><div className="card">
-            <h3>📈 Stats</h3>
-            <p>See your analytics in detail.</p>
+            <h3>Video #</h3>
+            <p>incident x.</p>
             </div>
             <div className="card">
-            <h3>🔔 Notifications</h3>
-            <p>Check your latest alerts.</p>
+            <h3>Video #</h3>
+            <p>incident y</p>
             </div>
             <div className="card">
-            <h3>⚙️ Settings</h3>
-            <p>Customize your experience.</p>
+            <h3>Video #</h3>
+            <p>incident z</p>
             </div>
         </div>
       </main>

@@ -44,9 +44,9 @@ const Report = () => {
 
         {/* Dashboard Grid */}
         <div className="dashboard-grid">
-            <div className="card">
-            <h3>📈 Stats</h3>
-            <p>See your analytics in detail.</p>
+            <div className="card-report">
+            <h3>Report an incident</h3>
+            <p></p>
             </div>
         </div>
       </main>
