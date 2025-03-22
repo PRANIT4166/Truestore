@@ -8,6 +8,7 @@ const { ethers } = require("ethers"); // added ethers
 const path = require("path");
 const multer = require("multer");
 const { addDetails } = require("./ReportData");
+const fs = require("fs");
 
 
 const app = express();
@@ -73,7 +74,7 @@ app.post("/upload",upload.single("file"), async (req, res) => {
         const report_id = await storage.uploadToIPFS(filePath, submittedBy || "unknown_user");
 
 
-        //fs.unlinkSync(filePath);//delete temp file 
+        fs.unlinkSync(filePath);//delete temp file 
 
 
         res.json({ success: true, report_id });
