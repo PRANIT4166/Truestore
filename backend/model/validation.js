@@ -8,4 +8,5 @@ const ValidationSchema = new mongoose.Schema({
   voted_at: { type: Date, default: Date.now }
 });
 
+// changes to test
 module.exports = mongoose.model("validation", ValidationSchema);
