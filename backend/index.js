@@ -1,9 +1,11 @@
+require("dotenv").config();
 const express = require("express");
 const connectDB = require("./db");
 const storage = require("./storage");
 const { checkAndFetchUser } = require("./UserData");
 const cors = require("cors");
-
+const { ethers } = require("ethers"); // added ethers
+const path = require("path");
 
 const app = express();
 
@@ -12,6 +14,14 @@ connectDB();
 
 app.use(express.json());
 app.use(cors()) 
+
+const RPC_URL = process.env.RPC_URL;
+const provider = new ethers.providers.JsonRpcProvider(RPC_URL); //RPC PROVIDER URL
+const CAMPUS_TOKEN_ADDRESS = process.env.CAMPUS_TOKEN_ADDRESS; 
+const PARTICIPATE_ADDRESS = process.env.PARTICIPATE_ADDRESS; 
+
+const campusTokenABI = require(path.join(__dirname, "abis", "CampusToken.json"));
+const participateABI = require(path.join(__dirname, "abis", "Participate.json"));
 
 
 // const router = express.Router();

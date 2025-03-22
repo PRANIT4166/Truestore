@@ -29,15 +29,15 @@ contract participate {
     }
 
     // makes a new report
-    function submitReport() external {  // Renamed from `report()` to `submitReport()`
+    function submitReport(uint256 reportId) external {  // Renamed from `report()` to `submitReport()`
         require(token.balanceOf(msg.sender) >= REPORT_STAKE, "Insufficient stake"); // checks if he has enough tokens
 
         token.burnTokens(msg.sender, REPORT_STAKE); // staking tokens for reporting (implicit penalization)
         stakedTokens[msg.sender] += REPORT_STAKE; // adding to staked tokens
         reportCount++; // for mapping purposes
         
-        Report storage newReport = reports[reportCount];
-        newReport.id = reportCount;
+        Report storage newReport = reports[reportId];
+        newReport.id = reportId;
         newReport.uploader = msg.sender;
         newReport.net_votes = 0;
         newReport.validated = false;
