@@ -9,15 +9,21 @@ connectDB();
 
 app.use(express.json()); // Enable JSON requests
 
+const upload = multer({dest : "uploads/"});
+
 // Upload Route
-app.post("/upload", async (req, res) => {
+app.post("/upload",upload.single("file"), async (req, res) => {
     try {
-        const { filePath, submittedBy } = req.body;
-        if (!filePath) {
-            return res.status(400).json({ success: false, error: "filePath is required" });
+        if (!req.file) {
+            return res.status(400).json({ success: false, error: "file required" });
         }
 
+        const submittedBy = req.body.submittedBy;
+        const filePath = req.file.path; 
         const fileHash = await storage.uploadToIPFS(filePath, submittedBy || "unknown_user");
+
+        fs.unlinkSync(filePath);//delete temp file 
+
         res.json({ success: true, fileHash });
     } catch (error) {
         console.error("Upload failed:", error);
