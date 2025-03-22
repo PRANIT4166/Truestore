@@ -24,6 +24,10 @@ const Home = () => {
     return () => unsubscribe();
   }, [navigate]);
 
+  const id = (user?.email || null);
+
+  
+
   return (
     <div className="dashboard-container">
       {/* Sidebar */}

@@ -104,7 +104,7 @@ body {
 .sidebar {
   width: 250px;
   height: 100vh;
-  background: linear-gradient(145deg, #05050b, #0a0a12);
+  background: linear-gradient(145deg, #0b0b13, #10101f);
   padding: 2rem 1.5rem;
   display: flex;
   flex-direction: column;
@@ -148,15 +148,21 @@ body {
 .dashboard-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 20px;
+  gap: 50px;
+  padding-top: 100px;
 }
 
 /* 📊 Dashboard Cards */
 .card {
-  background: linear-gradient(145deg, #0300a9, #9e0012);
+  background: linear-gradient(145deg, #0a008f, #86000d);
   padding: 1.5rem;
   border-radius: 12px;
-  box-shadow: 0 10px 10px rgba(153, 0, 255, 0.719);
+  border-style: outset;
+  border-color: #ffffff;
+  height: 570%;
+
+
+  box-shadow: 0 2px 15px rgba(153, 0, 255, 0.719);
   text-align: center;
   transition: all 0.3s ease-in-out;
 }

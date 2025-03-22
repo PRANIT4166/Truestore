@@ -44,7 +44,7 @@ const Validate = () => {
 
         {/* Dashboard Grid */}
         <div className="dashboard-grid">
-            {/* <div className="card">
+            <div className="card">
             <h3>📈 Stats</h3>
             <p>See your analytics in detail.</p>
             </div>
@@ -55,7 +55,30 @@ const Validate = () => {
             <div className="card">
             <h3>⚙️ Settings</h3>
             <p>Customize your experience.</p>
-            </div> */}
+            </div>
+            <div className="card">
+            <h3>📈 Stats</h3>
+            <p>See your analytics in detail.</p>
+            </div>
+            <div className="card">
+            <h3>🔔 Notifications</h3>
+            <p>Check your latest alerts.</p>
+            </div>
+            <div className="card">
+            <h3>⚙️ Settings</h3>
+            <p>Customize your experience.</p>
+            </div><div className="card">
+            <h3>📈 Stats</h3>
+            <p>See your analytics in detail.</p>
+            </div>
+            <div className="card">
+            <h3>🔔 Notifications</h3>
+            <p>Check your latest alerts.</p>
+            </div>
+            <div className="card">
+            <h3>⚙️ Settings</h3>
+            <p>Customize your experience.</p>
+            </div>
         </div>
       </main>
     </div>
