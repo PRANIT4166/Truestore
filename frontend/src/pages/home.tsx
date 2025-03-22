@@ -22,18 +22,20 @@ const Home = () => {
         navigate("/login");
       } else {
         setUser(currentUser);
-        try {
-          const response =  axios.post("http://localhost:5000/api/user", {
-            uid: currentUser.uid, // Use Firebase UID
-            name: currentUser.displayName,
-            role : "User"
-          });
-
-          setUserData(response);
-        } catch (error) {
-          console.error("Error fetching user data:", error);
-        }
-
+        axios
+        .post("http://localhost:5000/api/user", {
+          user_id: currentUser.uid,
+          name: currentUser.displayName,
+          role: "user",
+          email: currentUser.email
+        })
+        .then((response) => {
+          console.log("Fetched User Data:", response.data);
+          setUserData(response.data);
+        })
+        .catch((error) => {
+          console.error("❌ Error fetching user data:", error);
+        });
         
       }
     });
@@ -59,14 +61,19 @@ const Home = () => {
 
       {/* Main Dashboard */}
       <main className="dashboard">
-        <h1>Welcome, {user?.displayName || "User"} 👋</h1>
-        <p>Your dashboard overview:</p>
+      <div className="welcome-container">
+        <h1>
+          Welcome, {userData?.name || "User"}👋
+        </h1>
+        <p className="email">{userData?.email}</p>
+        <p className="overview">Your dashboard overview:</p>
+      </div>
 
         {/* Dashboard Grid */}
         <div className="dashboard-grid">
           <div className="card">
             <h3>📈 Stats</h3>
-            <p>See your analytics in detail.</p>
+            <p>your Tokens: {userData?.tokens}</p>
           </div>
           <div className="card">
             <h3>🔔 Notifications</h3>

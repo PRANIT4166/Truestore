@@ -1,24 +1,27 @@
-const User = require("./model/user"); // Import the user schema
+const User = require("./model/user"); // Ensure correct import
 
 /**
- * Check if a user exists in the database.
- * If they exist, fetch their data.
- * If not, create a new user and return their data.
- * @param {string} user_id - Firebase UID
- * @param {string} name - User's display name
- * @param {string} role - Role 
- * @returns {Promise<object>} - The user data from MongoDB
+ * Check if user exists; if not, create a new user.
+ * @param {string} ser_ - Firebase ser_
+ * @param {string} name - User's name
+ * @param {string} role -   User's role, email
+ * @returns {Promise<Object>} - User data
  */
-const checkAndFetchUser = async (user_id, name, role) => {
+const checkAndFetchUser = async (user_id, name, role, email) => {
   try {
     let user = await User.findOne({ user_id });
 
     if (!user) {
-      // User does not exist → Create a new one
-      user = await User.create({ user_id, name, role});
+      console.log("User not found, creating new user..."); // Debug log
+      user = new User({ user_id, name, role, email });
+
+      await user.save();
+      console.log("User created:", user);
+    } else {
+      console.log("User exists:", user);
     }
 
-    return user; // Return user data
+    return user;
   } catch (error) {
     console.error("Database error:", error);
     throw new Error("Failed to fetch or create user.");

@@ -149,7 +149,7 @@ body {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 50px;
-  padding-top: 100px;
+  padding-top: 30px;
 }
 
 /* 📊 Dashboard Cards */
@@ -218,4 +218,36 @@ body {
   margin-right: 10px;
   vertical-align: text-top;
   transition: transform 0.3s ease-in-out;
+}
+
+/* 🌟 Welcome Section */
+.welcome-container {
+  text-align: center; /* Center everything */
+  margin-top: 20px;
+}
+
+/* 👋 User Name */
+.welcome-container h1 {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+/* 📧 Email Styling */
+.welcome-container p.email {
+  font-size: 1.5rem;
+  color: #dedede; /* Light gray for subtle look */
+  margin-top: 5px;
+}
+
+/* 📊 Overview Text */
+.welcome-container p.overview {
+  font-size: 2rem;
+  color: #aa00ff; /* Pinkish tone */
+  margin-top: 10px;
+  font-weight: 500;
 }
