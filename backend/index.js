@@ -53,9 +53,9 @@ app.post("/api/user", async (req, res) => {
   });
 
 // app.post("/api/user", async (req, res) => {
-//     console.log("Incoming request:", req.body); // 🔍 Debugging log
+//     console.log("Incoming request:", req.body); // Debugging log
   
-//     res.json({ message: "API is working!" }); // ✅ Test response
+//     res.json({ message: "API is working!" }); // Test response
 //   });
 
 
@@ -86,6 +86,30 @@ app.post("/upload",upload.single("file"), async (req, res) => {
     } catch (error) {
         console.error("Upload failed:", error);
         res.status(500).json({ success: false, error: error.message || "Upload failed" });
+    }
+});
+
+
+// finds the correct file hash in MongoDB and returns the IPFS URL to the frontend.
+app.get("/video/report/:reportId", async (req, res) => {
+    try {
+        const reportId = req.params.reportId;
+
+        // Find the report by its ID in MongoDB
+        const report = await Report.findOne({ report_id: reportId });
+
+        if (!report) {
+            return res.status(404).json({ error: "Report not found" });
+        }
+
+        // Construct IPFS URL using the file hash from MongoDB
+        const ipfsUrl = `https://gateway.pinata.cloud/ipfs/${report.file_hash}`;
+
+        // Send video URL to frontend
+        res.json({ success: true, videoUrl: ipfsUrl });
+    } catch (error) {
+        console.error("Error fetching video by report ID:", error);
+        res.status(500).json({ success: false, error: "Server error" });
     }
 });
 
@@ -157,3 +181,55 @@ app.post("/api/report/details", async (req, res) => {
 // Start Server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
+
+// function createReportUI(reportId) {
+//     const reportContainer = document.getElementById("reportList");
+
+//     // Create a new report item
+//     const div = document.createElement("div");
+//     div.innerHTML = `<p>Report ID: ${reportId}</p>`;
+
+//     const button = document.createElement("button");
+//     button.innerText = "Show Video";
+//     button.onclick = () => fetchVideoByReportId(reportId); // Fetch video when clicked
+
+//     div.appendChild(button);
+//     reportContainer.appendChild(div);
+// }
+
+// // Example reports (Replace this with dynamic reports from backend)
+// createReportUI("12345");
+// createReportUI("67890");
+
+
+// // Call this when the page loads
+// fetchPendingReports();
+
+
+
+// async function fetchVideoByReportId(reportId) {
+//     try {
+//         const response = await fetch(`http://localhost:5000/video/report/${reportId}`);
+//         const data = await response.json();
+
+//         if (data.success) {
+//             document.getElementById("videoPlayer").src = data.videoUrl;
+//             document.getElementById("videoPlayer").style.display = "block"; // Show video
+//         } else {
+//             console.error("Error fetching video:", data.error);
+//         }
+//     } catch (error) {
+//         console.error("Error:", error);
+//     }
+// }
+
+
+
+//video player code 
+
+{/* <div id="reportList"></div> <!-- This is where reports will be listed -->
+
+<video id="videoPlayer" width="600" controls style="display:none;">
+    Your browser does not support the video tag.
+</video> */}
