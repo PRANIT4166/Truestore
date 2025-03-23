@@ -5,6 +5,8 @@ import { useNavigate } from "react-router-dom";
 import { useUser } from "../uderContext";
 import axios from "axios";
 
+import {fetchReports , fetchVids} from "../valaidateData"
+
 
 import "../styles.css";
 
@@ -38,45 +40,23 @@ const Validate = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+    const unsubscribe = onAuthStateChanged(auth,async (currentUser) => {
       if (!currentUser) {
         navigate("/login");
       } else {
         setUser(currentUser);
-        fetchReports();
+        try {
+          const rep = await fetchReports(); // ✅ Fetch reports using backend function
+          if (rep) setReports(rep);
+          } catch (error) {
+              console.error("❌ Error fetching reports:", error);
+          }
       }
     });
+
+
     return () => unsubscribe();
   }, [navigate]);
-
-
-  const fetchReports = async () => {
-    try {
-      const response = await axios.get("http://localhost:5000/api/reports");
-      setReports(response.data);
-    } catch (error) {
-      console.error("❌ Error fetching reports:", error);
-    }
-  };
-
-  const fetchVids = async (file_hash: string) => {
-    try {
-        const response = await axios.post("http://localhost:5000/video/report/getrep", 
-            { file_hash }, // ✅ Send file_hash in request body
-            { headers: { "Content-Type": "application/json" } } // ✅ Ensure correct headers
-        );
-
-        if (response.data.file_url) {
-            window.location.href = response.data.file_url; // ✅ Redirect user to the video
-        } else {
-            console.error("❌ No file URL received.");
-            alert("Video not found.");
-        }
-    } catch (error) {
-        console.error("❌ Error fetching video:", error);
-        alert("Failed to fetch video. Check console for details.");
-    }
-};
 
 
     const handleValidation = async (reportId: string, vote: boolean) => {
@@ -98,6 +78,11 @@ const Validate = () => {
         alert("Validation failed. Check console for details.");
       }
     };
+
+
+
+
+
 
     return (
       <div className="dashboard-container">
