@@ -113,9 +113,9 @@ const Validate = () => {
                   <button className="fetch-btn" onClick={() => fetchVids(report.file_hash)}>
                     🔍 Fetch Evidence
                   </button>
-                  <p className="vec"><strong>Vehicle: </strong> {report.metadata.vehicle}</p>
-                  <p className="loc"><strong>Location: </strong> {report.metadata.loc}</p>
-                  <p className="desc"><strong>Description: </strong> {report.metadata.desc}</p>
+                  <p className="vec"><strong>Vehicle: </strong> <span style={{ marginLeft: "5px" }}>{report.metadata.vehicle}</span></p>
+                  <p className="loc"><strong>Location: </strong> <span style={{ marginLeft: "5px" }}>{report.metadata.loc}</span></p>
+                  <p className="desc"><strong>Description: </strong><span style={{ marginLeft: "5px" }}>{report.metadata.desc}</span></p>
   
                   {/* Validation Buttons ✅❌  */}
                   <div className="validation-buttons">
