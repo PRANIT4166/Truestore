@@ -51,7 +51,7 @@ async function uploadToIPFS(filePath, submittedBy = "unknown_user") {
             console.error("Failed to save to MongoDB:", dbError);
         }
 
-        return result.IpfsHash;
+        return newReport.report_id;
     } catch (error) {
         console.error("Error uploading file:", error.message || error);
         throw error;
