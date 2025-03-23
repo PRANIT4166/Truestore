@@ -23,7 +23,7 @@ const fetchReports = async () => {
       const response = await axios.get("http://localhost:5000/api/reports");
       return response.data;
     } catch (error) {
-      console.error("❌ Error fetching reports:", error);
+      console.error("❌ Error fetching reports: in func call", error);
     }
   };
 

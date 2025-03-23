@@ -84,12 +84,18 @@ const Home = () => {
             </div>
           </div>
           <div className="card-home">
-            <h3>🔔 Notifications</h3>
-            <p>Check your latest alerts.</p>
+          <div className="rep">
+            <h3>Report</h3>
+            <p className="info">Report an incident of rash driving that takes place in front of you . Fill in the details, and upload a video/photo of the incident. Stake in 25 token to participate and get 100 token if your evidence is found to be valid.
+            </p>
+            </div>
           </div>
           <div className="card-home">
-            <h3>⚙️ Settings</h3>
-            <p>Customize your experience.</p>
+          <div className="rep">
+            <h3>Validate</h3>
+            <p className="info"> Participate in the  validation process , make an informed decision by clicking on the file. Stake - 50 reward - 100 . Improve your rank by gaining rewards by choosing correct.
+            </p>
+            </div>
           </div>
         </div>
       </main>

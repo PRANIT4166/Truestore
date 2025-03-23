@@ -49,7 +49,7 @@ const Validate = () => {
           const rep = await fetchReports(); // ✅ Fetch reports using backend function
           if (rep) setReports(rep);
           } catch (error) {
-              console.error("❌ Error fetching reports:", error);
+              console.error("❌ Error fetching reports: in page", error);
           }
       }
     });

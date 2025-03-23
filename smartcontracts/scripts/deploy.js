@@ -1,7 +1,10 @@
 const hre = require("hardhat");
+const RPC_URL = process.env.RPC_URL;
+const provider = new ethers.providers.JsonRpcProvider(RPC_URL);
 
 async function main() {
-    const [deployer] = await hre.ethers.getSigners();
+    const accounts = await provider.listAccounts();
+    const deployer = await provider.getSigner(accounts[0]);
 
     console.log(`Deploying contracts with the account: ${deployer.address}`);
 

@@ -160,7 +160,7 @@ body {
   border-radius: 12px;
   border-style: outset;
   border-color: #ffffff;
-  height: 240%;
+  height: 120%;
 
 
   box-shadow: 0 2px 15px rgba(153, 0, 255, 0.719);
@@ -305,14 +305,26 @@ body {
 }
 
 .stats h3 {
-  font-size: 1.5rem;
+  font-size: 1.6rem;
   color: #ffffff; /* Light gray for subtle look */
   margin-top: 5px;
 }
 .stats p.tokens {
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   color: #ffffff; /* Light gray for subtle look */
   margin-top: 100px;
+}
+
+.rep h3 {
+  font-size: 1.6rem;
+  color: #ffffff; /* Light gray for subtle look */
+  margin-top: 5px;
+}
+.rep p.info {
+  font-size: 1.3rem;
+  color: #ffffff; /* Light gray for subtle look */
+  margin-top: 100px;
+  
 }
 
 /* 📝 Validation Cards */

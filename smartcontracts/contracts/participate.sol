@@ -6,10 +6,10 @@ import "./CampusToken.sol";
 contract participate {
     CampusToken public token; // contract instance that makes an instance of CampusToken called token
 
-    uint256 public constant REPORT_STAKE = 100 * 10 ** 18; // 100 ETH IN WEI (IN OUR CASE CAMPUSTOKEN)
+    uint256 public constant REPORT_STAKE = 25 * 10 ** 18; // 100 ETH IN WEI (IN OUR CASE CAMPUSTOKEN)
     uint256 public constant VALIDATE_STAKE = 50 * 10 ** 18;
-    uint256 public constant REPORT_REWARD = 5 * 10 ** 18;
-    uint256 public constant VALIDATE_REWARD = 10 * 10 ** 18;
+    uint256 public constant REPORT_REWARD = 100 * 10 ** 18;
+    uint256 public constant VALIDATE_REWARD = 5 * 10 ** 18;
 
     struct Report {
         uint256 id;

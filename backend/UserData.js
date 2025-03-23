@@ -1,80 +1,14 @@
-// const User = require("./model/user"); // Ensure correct import
-// const path = require("path");
-
-
-// /**
-//  * Check if user exists; if not, create a new user.
-//  * @param {string} ser_ - Firebase ser_
-//  * @param {string} name - User's name
-//  * @param {string} role -   User's role, email
-//  * @returns {Promise<Object>} - User data
-// */
-
-// import { JsonRpcProvider, Wallet, Contract } from "ethers"; 
-
-// const RPC_URL = process.env.RPC_URL;
-// const provider = new JsonRpcProvider(RPC_URL); //RPC PROVIDER URL
-// const CAMPUS_TOKEN_ADDRESS = process.env.CAMPUS_TOKEN_ADDRESS; 
-// const PARTICIPATE_ADDRESS = process.env.PARTICIPATE_ADDRESS; 
-
-// const campusTokenABI = require(path.join(__dirname, "artifacts", "contracts", "CampusToken.sol","CampusToken.json"));
-// const participateABI = require(path.join(__dirname, "artifacts", "contracts","participate.sol","participate.json"));
-
-
-// const campusToken = new ethers.Contract(CAMPUS_TOKEN_ADDRESS, campusTokenABI, provider);
-// const participate = new ethers.Contract(PARTICIPATE_ADDRESS, participateABI, provider);
-
-// const checkAndFetchUser = async (user_id, name, role, email) => {
-//   try {
-//     let user = await User.findOne({ user_id });
-
-//     if (!user) {
-//       console.log("User not found, creating new user..."); // Debug log
-//       //creating wallet for the new user
-//       const wallet = ethers.Wallet.createRandom();
-//       const account = wallet.address;
-//       const privateKey = wallet.privateKey;
-
-//       // encryption step
-//       // const encryptedPrivateKey = new User().encryptPrivateKey(privateKey,SECRET_KEY); 
-
-//       user = new User({ user_id, 
-//         name,
-//         role, 
-//         email,
-//         account,
-//         private_key : privateKey
-//        }); // changed from PRANIT
-
-//        const tx = await campusToken.connect(account).rewardTokens(account,1000 * 10 ** 18);
-//        await tx.wait();
-
-//       await user.save();
-//       console.log("User created:", user);
-//     } else {
-//       console.log("User exists:", user);
-//     }
-
-//     return user;
-//   } catch (error) {
-//     console.error("Database error:", error);
-//     throw new Error("Failed to fetch or create user.");
-//   }
-// };
-
-// module.exports = { checkAndFetchUser };
-
 require("dotenv").config();
 const User = require("./model/user");
 const path = require("path");
 const fs = require("fs");
-const ethers = require("ethers"); // Import entire ethers v5 library
+const ethers = require("ethers"); 
 
-// Setup Provider for ethers v5
+
 const RPC_URL = process.env.RPC_URL;
 const provider = new ethers.providers.JsonRpcProvider(RPC_URL); // ethers v5 JsonRpcProvider
 
-// Smart Contract Addresses
+
 const CAMPUS_TOKEN_ADDRESS = process.env.CAMPUS_TOKEN_ADDRESS;
 const PARTICIPATE_ADDRESS = process.env.PARTICIPATE_ADDRESS;
 
@@ -105,29 +39,28 @@ const checkAndFetchUser = async (user_id, name, role, email) => {
 
     if (!user) {
       console.log("User not found, creating new user...");
-
-      // Step 1: Create New Wallet for User (ethers v5)
-      const wallet = ethers.Wallet.createRandom();
-      const account = wallet.address;
-      const privateKey = wallet.privateKey;
-
-      // Step 2: Store User in Database
+      
       user = new User({
         user_id,
         name,
         role,
         email,
-        account,
-        private_key: privateKey,
+        account: "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+        private_key: "0x59c6995e998f97a5a0044966f0945389dc9e86dae88c7a8412f4603b6b78690d",
       });
 
-      // Step 3: Fund User with Initial Tokens (ethers v5)
-      const walletWithProvider = wallet.connect(provider);
-      const campusTokenWithSigner = campusToken.connect(walletWithProvider);
-      const tx = await campusTokenWithSigner.rewardTokens(account, ethers.utils.parseUnits("1000", 18));
-      await tx.wait();
+      
+    // const accounts = await provider.listAccounts();
+    // const deployer = await provider.getSigner(accounts[0]);
+    // const userrr = provider.getSigner(accounts[1]);
+    // const amount = ethers.utils.parseUnits("1000",18);
+    // const tx = await campusToken.rewardTokens(await userrr.getAddress(), amount);
 
-      // Step 4: Save User to Database
+    // const new_balance = await campusToken.balanceOf(userrr.account);
+    //     const bal_in_eth = formatUnits(new_balance, 18); // ✅ Fix for Ethers v6
+
+    //     user.tokens = parseFloat(bal_in_eth);
+
       await user.save();
       console.log("✅ User created:", user);
     } else {
