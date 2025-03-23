@@ -28,8 +28,8 @@ app.use(cors())
 // const CAMPUS_TOKEN_ADDRESS = process.env.CAMPUS_TOKEN_ADDRESS; 
 // const PARTICIPATE_ADDRESS = process.env.PARTICIPATE_ADDRESS; 
 
-const campusTokenABI = require(path.join(__dirname, "artifacts", "contracts", "CampusToken.sol","CampusToken.json"));
-const participateABI = require(path.join(__dirname, "artifacts", "contracts","participate.sol","participate.json"));
+// const campusTokenABI = require(path.join(__dirname, "artifacts", "contracts", "CampusToken.sol","CampusToken.json"));
+// const participateABI = require(path.join(__dirname, "artifacts", "contracts","participate.sol","participate.json"));
 
 
 
@@ -144,8 +144,8 @@ app.post("/api/report/details", async (req, res) => {
   
       await validation.save();
 
-      report.status = vote ? "verified" : "rejected";
-      await report.save();
+      // report.status = vote ? "verified" : "rejected";
+      // await report.save();
 
       res.json({ success: true, message: `Report validation saved successfully.` });
     } catch (error) {
