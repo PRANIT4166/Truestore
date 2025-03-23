@@ -126,15 +126,15 @@ app.post("/video/report/getrep", async (req, res) => {
 
 app.post("/api/report/details", async (req, res) => {
     try {
-        const { report_id, vehicle_id, location, description } = req.body;
+        const { report_id, vehicle_id, Location, description } = req.body;
 
         if (!report_id || !vehicle_id || !location || !description) {
             return res.status(400).json({ success: false, error: "All fields are required." });
         }
 
-        // // Step 1: Update Report in Database
-        // const updatedReport = await addDetails(report_id, vehicle_id, location, description);
-        // res.json({ success: true, report: updatedReport });
+        // Step 1: Update Report in Database
+        const updatedReport = await addDetails(report_id, vehicle_id, Location, description);
+        res.json({ success: true, report: updatedReport });
 
         // // Step 2: Fetch the Report & User from Database
         // const temp_report = await Report.findOne({ report_id });
