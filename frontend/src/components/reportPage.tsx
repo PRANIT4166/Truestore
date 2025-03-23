@@ -1,8 +1,11 @@
 import { auth, logout } from "../firebase";
-import { useState } from "react";
 import "../styles.css";
 import { useUser } from "../uderContext";
 import axios from "axios";
+import { useEffect, useState } from "react";
+import { onAuthStateChanged, User } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
+
 
 
 
@@ -16,9 +19,25 @@ const Report = () => {
   const [vehicleId, setVehicleId] = useState("");
   const [location, setLocation] = useState("");
   const [description, setDescription] = useState("");
+  const [user, setUser] = useState<User | null>(null);
+  const navigate = useNavigate();
   const [file, setFile] = useState<File | null>(null);
 
-  // Handle File Selection
+  
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      if (!currentUser) {
+        navigate("/login");
+      } else {
+        setUser(currentUser);
+      }
+    });
+    return () => unsubscribe();
+  }, [navigate]);
+
+  
+  // Handle File Selection}
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files.length > 0) {
       setFile(event.target.files[0]);

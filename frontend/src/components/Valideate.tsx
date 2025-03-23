@@ -35,7 +35,6 @@ const Validate = () => {
   const { userData } = useUser();
   const [user, setUser] = useState<User | null>(null);
   const [reports, setReports] = useState<Report[]>([]);
-  const [videoUrls, setVideoUrls] = useState<{ [key: string]: string }>({});
   const navigate = useNavigate();
 
   useEffect(() => {

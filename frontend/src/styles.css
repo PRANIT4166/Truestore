@@ -212,14 +212,15 @@ body {
 
 /* 🚀 Submit Button */
 .submit-btn {
-  background-color: #9100be;
-  color: white;
+  background-color: #80d8ff;
+  color: rgb(255, 255, 255);
   border: none;
   padding: 12px 20px;
   font-size: 16px;
   border-radius: 8px;
   cursor: pointer;
   transition: 0.3s;
+  margin-top: 20px;
 }
 
 .submit-btn:hover {

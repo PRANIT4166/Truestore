@@ -20,7 +20,7 @@ const Home = () => {
   useEffect(() => {
     const fetchUser = async (currentUser: User | null) => {
       if (!currentUser) {
-        navigate("/");
+        navigate("/login");
         return;
       }
 
