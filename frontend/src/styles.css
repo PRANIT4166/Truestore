@@ -28,7 +28,7 @@ body {
 
 /* 🎭 Login Box */
 .login-container {
-  background: linear-gradient(145deg, #252542, #3a3a80);
+  background: linear-gradient(0deg, #252542, #3a3a80);
   padding: 3rem;
   border-radius: 20px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
@@ -41,7 +41,7 @@ body {
 .login-container h2 {
   font-size: 2.5rem;
   font-weight: 700;
-  color: #d042c9;
+  color: #d000ff;
 }
 
 /* 🔤 Subtext */
@@ -49,6 +49,7 @@ body {
   font-size: 1.1rem;
   color: #e5e5e5;
   margin-bottom: 25px;
+  margin-top: 5px;
 }
 
 /* 🎯 Google Login Button */
@@ -59,7 +60,7 @@ body {
   background: white;
   border: 1px solid rgba(255, 118, 136, 0.5);
   border-radius: 24px;
-  padding: 12px 22px;
+  padding: 8px 15px;
   cursor: pointer;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
   transition: all 0.3s ease-in-out;
@@ -68,8 +69,8 @@ body {
 }
 
 .google-btn img {
-  width: 22px;
-  margin-right: 12px;
+  width: 35px;
+  margin-right: 10px;
 }
 
 .google-btn span {
@@ -167,7 +168,7 @@ body {
   transition: all 0.3s ease-in-out;
 }
 .card {
-  background: linear-gradient(145deg, #0a008f, #86000d);
+  background: linear-gradient(125deg, #0d0043, #3f0000);
   padding: 1.5rem;
   border-radius: 12px;
   border-style: outset;
@@ -175,7 +176,7 @@ body {
   height: 370%;
 
 
-  box-shadow: 0 2px 15px rgba(153, 0, 255, 0.719);
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.719);
   text-align: center;
   transition: all 0.3s ease-in-out;
 }
@@ -186,10 +187,10 @@ body {
   border-style: outset;
   border-color: #ffffff;
   height: 80%;
-
-
-
   box-shadow: 0 2px 15px rgba(153, 0, 255, 0.719);
+  margin-left: 180px;
+  margin-right: 180px;
+  margin-top: 10px;
   text-align: center;
   transition: all 0.3s ease-in-out;
 }
@@ -203,18 +204,15 @@ body {
   font : "Arial"
 }
 
-/* 📎 File Upload */
-.card-report input[type="file"] {
-  background: white;
-  padding: 10px;
-  cursor: pointer;
-}
+
+
 
 /* 🚀 Submit Button */
 .submit-btn {
-  background-color: #80d8ff;
+  background-color: #070063;
   color: rgb(255, 255, 255);
-  border: none;
+  border: whitesmoke;
+  border-style: outset;
   padding: 12px 20px;
   font-size: 16px;
   border-radius: 8px;
@@ -224,7 +222,7 @@ body {
 }
 
 .submit-btn:hover {
-  background-color: #ff4268;
+  background-color: #4500db;
 }
 
 /* Card Hover Effect */
@@ -234,7 +232,7 @@ body {
 
 /* 🟣 Logout Button */
 .logout-btn {
-  background: #ae00ff;
+  background: #0065b7;
   color: white;
   border: none;
   padding: 12px;
@@ -246,7 +244,7 @@ body {
 }
 
 .logout-btn:hover {
-  background: #e7005c;
+  background: #002369;
 }
 
 /* 🔥 Fade-in Animation */
@@ -289,19 +287,19 @@ body {
 .welcome-container p.email {
   font-size: 1.5rem;
   color: #dedede; /* Light gray for subtle look */
-  margin-top: 5px;
+  margin-top: 10px;
 }
 .welcome-container p.token {
   font-size: 1.5rem;
   color: #dedede; /* Light gray for subtle look */
-  margin-top: 5px;
+  margin-top: 10px;
   padding-bottom: 10px;
 }
 
 /* 📊 Overview Text */
 .welcome-container p.overview {
   font-size: 2rem;
-  color: #aa00ff; /* Pinkish tone */
+  color: #ffc400; /* Pinkish tone */
   margin-top: 10px;
   font-weight: 500;
 }
@@ -337,14 +335,14 @@ body {
 .validate-card:nth-child(n+1) {
   z-index: 1; /* ✅ Keeps them below overlapping cards */
   margin-top: 0; 
-  height: 120%;
+  height: 115%;
 }
 
 /* 📝 Allow Lower Cards to Overlap */
 .validate-card:nth-child(n+4) {
   position: relative;
   z-index: 1;
-  margin-top: -120px; 
+  margin-top: -130px; 
   height: 190%;                    /* ✅ Pulls cards upwards to overlap */
   transition: transform 0.3s ease-in-out;
 }
@@ -486,18 +484,22 @@ body {
 /* 🔍 Fetch Video Button */
 .fetch-btn {
   display: block;
-  background-color: #28a745;
+  background-color: #00000087;
   color: white;
   padding: 10px;
   border-radius: 5px;
   text-align: center;
   margin: 10px auto;
+  margin-top: 30px;
+  margin-bottom: 30px;
   width: 80%;
   font-weight: bold;
-  border: none;
+  border: rgb(181, 181, 181);
+  border-style:ridge;
   cursor: pointer;
 }
 
 .fetch-btn:hover {
-  background-color: #218838;
+  background-color: #afafaf;
+  color: #000000;
 }
