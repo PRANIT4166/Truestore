@@ -9,6 +9,10 @@ const path = require("path");
 const multer = require("multer");
 const { addDetails } = require("./ReportData");
 const fs = require("fs");
+const Validation = require("./model/validation");
+const Report = require("./model/report")
+const mongoose = require("mongoose");
+
 
 
 const app = express();
@@ -19,13 +23,13 @@ connectDB();
 app.use(express.json());
 app.use(cors()) 
 
-const RPC_URL = process.env.RPC_URL;
+// const RPC_URL = process.env.RPC_URL;
 // const provider = new ethers.providers.JsonRpcProvider(RPC_URL); //RPC PROVIDER URL
 // const CAMPUS_TOKEN_ADDRESS = process.env.CAMPUS_TOKEN_ADDRESS; 
 // const PARTICIPATE_ADDRESS = process.env.PARTICIPATE_ADDRESS; 
 
-const campusTokenABI = require(path.join(__dirname, "artifacts", "contracts", "CampusToken.sol","CampusToken.json"));
-const participateABI = require(path.join(__dirname, "artifacts", "contracts","participate.sol","participate.json"));
+// const campusTokenABI = require(path.join(__dirname, "artifacts", "contracts", "CampusToken.sol","CampusToken.json"));
+// const participateABI = require(path.join(__dirname, "artifacts", "contracts","participate.sol","participate.json"));
 
 
 
@@ -98,6 +102,55 @@ app.post("/api/report/details", async (req, res) => {
     } catch (error) {
       console.error("❌ Error updating report:", error.message);
       res.status(500).json({ success: false, error: "Failed to update report." });
+    }
+  });
+
+
+
+  app.get("/api/reports", async (req, res) => {
+    try {
+      const reports = await Report.find({ status: "pending" });
+      res.json(reports);
+    } catch (error) {
+      console.error("❌ Error fetching reports:", error);
+      res.status(500).json({ success: false, error: "Failed to fetch reports." });
+    }
+  });
+
+
+  app.post("/api/validate", async (req, res) => {
+    const { report_id, validator_id, vote } = req.body;
+  
+    try {
+      // Check if the report exists
+      const report = await Report.findOne({ report_id });
+      if (!report) {
+        return res.status(404).json({ success: false, error: "Report not found." });
+      }
+  
+      // Check if the validator has already voted on this report
+      const existingValidation = await Validation.findOne({ report_id, validator_id });
+      if (existingValidation) {
+        return res.status(400).json({ success: false, error: "You have already voted on this report." });
+      }
+  
+      // ✅ Store validation vote in MongoDB
+      const validation = new Validation({
+        validation_id: new mongoose.Types.ObjectId().toString(), // Generate unique ID
+        report_id,
+        validator_id,
+        vote, // true = Authentic, false = Unreliable
+      });
+  
+      await validation.save();
+
+      // report.status = vote ? "verified" : "rejected";
+      // await report.save();
+
+      res.json({ success: true, message: `Report validation saved successfully.` });
+    } catch (error) {
+      console.error("❌ Validation error:", error);
+      res.status(500).json({ success: false, error: "Validation failed." });
     }
   });
 
