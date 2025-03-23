@@ -13,7 +13,7 @@ import Validate from "./components/Valideate"; // Create this page next
     <UserProvider>
     <Router>
       <Routes>
-        <Route path="/" element={<Login />} />
+        <Route path="/login" element={<Login />} />
         <Route path="/home" element={<Home />} />
         <Route path="/report" element={<Report />} />
         <Route path="/validate" element={<Validate />} />

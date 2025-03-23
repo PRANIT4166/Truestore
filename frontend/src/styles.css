@@ -315,3 +315,188 @@ body {
   color: #ffffff; /* Light gray for subtle look */
   margin-top: 100px;
 }
+
+/* 📝 Validation Cards */
+/* .validate-card {
+  background: linear-gradient(145deg, #0a008f, #86000d);
+  position: relative;
+  z-index: 1;
+  margin-top: px;
+  padding: 1.5rem;
+  border-radius: 12px;
+  border-style: outset;
+  border-color: #ffffff;
+  height: 150%;
+  box-shadow: 0 2px 15px rgba(153, 0, 255, 0.719);
+  text-align: center;
+  transition: all 0.3s ease-in-out;
+} */
+
+
+.validate-card:nth-child(n+1) {
+  z-index: 1; /* ✅ Keeps them below overlapping cards */
+  margin-top: 0; 
+  height: 120%;
+}
+
+/* 📝 Allow Lower Cards to Overlap */
+.validate-card:nth-child(n+4) {
+  position: relative;
+  z-index: 1;
+  margin-top: -120px; 
+  height: 190%;                    /* ✅ Pulls cards upwards to overlap */
+  transition: transform 0.3s ease-in-out;
+}
+
+/* 📝 Ensure the Top Card Comes to the Front on Hover */
+.validate-card:hover {
+  z-index: 10; /* ✅ Moves the hovered card on top */
+  transition: all 0.3s ease-in-out;
+  /* ✅ Slight zoom for focus */
+}
+
+/* 🎥 Media Preview */
+.media-preview {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 10px 0;
+}
+
+.preview-media {
+  max-width: 100%;
+  border-radius: 8px;
+}
+
+/* ✅❌ Validation Buttons */
+.validation-buttons {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 10px;
+}
+
+.authentic-btn {
+  background-color: #1c9900;
+  color: white;
+  border: none;
+  padding: 10px;
+  margin:  8px;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  width: stretch;
+}
+
+.authentic-btn:hover {
+  background-color: #218838;
+}
+
+.unreliable-btn {
+  background-color: #7e0026;
+  color: white;
+  border: none;
+  padding: 10px;
+  margin: 8px;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  width: stretch;
+}
+
+.unreliable-btn:hover {
+  background-color: #a91c2a;
+}
+
+.dashboard-grid-val {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 50px;
+  padding-top: 30px;
+}
+
+.dashboard-grid-val p.no-view {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 10px 0;
+  border: white;
+  border-style: outset;
+  width: 500px;
+}
+
+.validate-card p.vec {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 10px 0;
+
+}
+.validate-card p.loc {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 10px 0;
+
+}
+.validate-card p.desc {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 10px 0;
+
+}
+.validate-card h3 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 10px 0;
+
+}
+.validate-card p.file {
+  word-wrap: break-word; 
+  overflow-wrap: break-word; 
+  white-space: normal;
+  max-width: 100%; 
+  padding: 10px;
+  font-size: 18px; 
+  line-height: 1.4;
+  border: whitesmoke;
+  border-style: outset;
+}
+
+/* 🎥 Watch Video Button */
+.watch-btn {
+  display: block;
+  background-color: #007bff;
+  color: white;
+  padding: 10px;
+  border-radius: 5px;
+  text-align: center;
+  margin: 10px auto;
+  text-decoration: none;
+  width: 80%;
+  font-weight: bold;
+}
+
+.watch-btn:hover {
+  background-color: #0056b3;
+}
+
+/* 🔍 Fetch Video Button */
+.fetch-btn {
+  display: block;
+  background-color: #28a745;
+  color: white;
+  padding: 10px;
+  border-radius: 5px;
+  text-align: center;
+  margin: 10px auto;
+  width: 80%;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+}
+
+.fetch-btn:hover {
+  background-color: #218838;
+}
