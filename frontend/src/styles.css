@@ -463,3 +463,40 @@ body {
   border: whitesmoke;
   border-style: outset;
 }
+
+/* 🎥 Watch Video Button */
+.watch-btn {
+  display: block;
+  background-color: #007bff;
+  color: white;
+  padding: 10px;
+  border-radius: 5px;
+  text-align: center;
+  margin: 10px auto;
+  text-decoration: none;
+  width: 80%;
+  font-weight: bold;
+}
+
+.watch-btn:hover {
+  background-color: #0056b3;
+}
+
+/* 🔍 Fetch Video Button */
+.fetch-btn {
+  display: block;
+  background-color: #28a745;
+  color: white;
+  padding: 10px;
+  border-radius: 5px;
+  text-align: center;
+  margin: 10px auto;
+  width: 80%;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+}
+
+.fetch-btn:hover {
+  background-color: #218838;
+}

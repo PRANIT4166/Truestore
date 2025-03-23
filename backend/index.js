@@ -22,6 +22,7 @@ connectDB();
 
 app.use(express.json());
 app.use(cors()) 
+app.use(express.urlencoded({ extended: true }));
 
 // const RPC_URL = process.env.RPC_URL;
 // const provider = new ethers.providers.JsonRpcProvider(RPC_URL); //RPC PROVIDER URL
@@ -91,26 +92,26 @@ app.post("/upload",upload.single("file"), async (req, res) => {
 
 
 // finds the correct file hash in MongoDB and returns the IPFS URL to the frontend.
-app.get("/video/report/:reportId", async (req, res) => {
-    try {
-        const reportId = req.params.reportId;
+app.post("/video/report/getrep", async (req, res) => {
+  console.log("🔍 Request received:", req.body); // ✅ Check what frontend is sending
 
-        // Find the report by its ID in MongoDB
-        const report = await Report.findOne({ report_id: reportId });
+  try {
+      const { file_hash } = req.body; // ✅ Extract file_hash
 
-        if (!report) {
-            return res.status(404).json({ error: "Report not found" });
-        }
+      if (!file_hash) {
+          console.log("❌ Missing file_hash in request!");
+          return res.status(400).json({ error: "file_hash is required" });
+      }
 
-        // Construct IPFS URL using the file hash from MongoDB
-        const ipfsUrl = `https://gateway.pinata.cloud/ipfs/${report.file_hash}`;
+      console.log("🔍 Fetching video for:", file_hash);
 
-        // Send video URL to frontend
-        res.json({ success: true, videoUrl: ipfsUrl });
-    } catch (error) {
-        console.error("Error fetching video by report ID:", error);
-        res.status(500).json({ success: false, error: "Server error" });
-    }
+      // ✅ Return file URL
+      res.json({ success: true, file_url: `https://gateway.pinata.cloud/ipfs/${file_hash}` });
+
+  } catch (error) {
+      console.error("❌ Error fetching video:", error);
+      res.status(500).json({ error: "Failed to fetch video." });
+  }
 });
 
 app.post("/api/report/details", async (req, res) => {
@@ -179,6 +180,11 @@ app.post("/api/report/details", async (req, res) => {
   });
 
 // Start Server
+
+app.get("/", (req, res) => {
+  res.send("🚀 Backend is running!");
+});
+
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 

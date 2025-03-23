@@ -35,6 +35,7 @@ const Validate = () => {
   const { userData } = useUser();
   const [user, setUser] = useState<User | null>(null);
   const [reports, setReports] = useState<Report[]>([]);
+  const [videoUrls, setVideoUrls] = useState<{ [key: string]: string }>({});
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -58,6 +59,25 @@ const Validate = () => {
       console.error("❌ Error fetching reports:", error);
     }
   };
+
+  const fetchVids = async (file_hash: string) => {
+    try {
+        const response = await axios.post("http://localhost:5000/video/report/getrep", 
+            { file_hash }, // ✅ Send file_hash in request body
+            { headers: { "Content-Type": "application/json" } } // ✅ Ensure correct headers
+        );
+
+        if (response.data.file_url) {
+            window.location.href = response.data.file_url; // ✅ Redirect user to the video
+        } else {
+            console.error("❌ No file URL received.");
+            alert("Video not found.");
+        }
+    } catch (error) {
+        console.error("❌ Error fetching video:", error);
+        alert("Failed to fetch video. Check console for details.");
+    }
+};
 
 
     const handleValidation = async (reportId: string, vote: boolean) => {
@@ -95,7 +115,10 @@ const Validate = () => {
   
         {/* Main Dashboard */}
         <main className="dashboard">
-          <h1>Welcome, {user?.displayName || "User"} 👋</h1>
+        <div className="welcome-container">
+          <h1>Welcome, {userData?.name || "User"} 👋</h1>
+          <p className="token">Token Balance: {userData?.tokens}</p>
+        </div>
   
           {/* Validation Grid */}
           <div className="dashboard-grid-val">
@@ -103,7 +126,9 @@ const Validate = () => {
               reports.map((report) => (
                 <div key={report._id} className="card validate-card">
                   <h3>Report #{report.report_id}</h3>
-                  <p className="file"><strong>File: </strong> {report.file_hash}</p>
+                  <button className="fetch-btn" onClick={() => fetchVids(report.file_hash)}>
+                    🔍 Fetch Evidence
+                  </button>
                   <p className="vec"><strong>Vehicle:</strong> {report.metadata.vehicle}</p>
                   <p className="loc"><strong>Location:</strong> {report.metadata.loc}</p>
                   <p className="desc"><strong>Description:</strong> {report.metadata.desc}</p>
