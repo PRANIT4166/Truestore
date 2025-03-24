@@ -18,13 +18,16 @@ interface Report {
   }
 
 
-const fetchReports = async () => {
-    try {
-      const response = await axios.get("http://localhost:5000/api/reports");
-      return response.data;
-    } catch (error) {
-      console.error("❌ Error fetching reports: in func call", error);
-    }
+const fetchReports = async (validator_id: string) => {
+  try {
+    const response = await axios.get("http://localhost:5000/api/reports/unvalidated", {
+        params: { validator_id }
+    });
+    console.log("data size: ", response.data)
+    return response.data;
+} catch (error) {
+    console.error("❌ Error fetching reports: in func call", error);
+}
   };
 
   const fetchVids = async (file_hash: string) => {

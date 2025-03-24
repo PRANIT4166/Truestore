@@ -103,7 +103,7 @@ app.post("/upload", upload.single("file"), async (req, res) => {
 
 // finds the correct file hash in MongoDB and returns the IPFS URL to the frontend.
 app.post("/video/report/getrep", async (req, res) => {
-  console.log("🔍 Request received:", req.body); // ✅ Check what frontend is sending
+  console.log("🔍 Request received:", req.body); 
 
   try {
       const { file_hash } = req.body; // ✅ Extract file_hash
@@ -126,37 +126,15 @@ app.post("/video/report/getrep", async (req, res) => {
 
 app.post("/api/report/details", async (req, res) => {
     try {
-        const { report_id, vehicle_id, Location, description } = req.body;
+        const { report_id, vehicle_id, location, description } = req.body;
 
         if (!report_id || !vehicle_id || !location || !description) {
             return res.status(400).json({ success: false, error: "All fields are required." });
         }
 
-        // Step 1: Update Report in Database
-        const updatedReport = await addDetails(report_id, vehicle_id, Location, description);
+        const updatedReport = await addDetails(report_id, vehicle_id, location, description);
         res.json({ success: true, report: updatedReport });
 
-        // // Step 2: Fetch the Report & User from Database
-        // const temp_report = await Report.findOne({ report_id });
-        // if (!temp_report) return res.status(404).json({ success: false, error: "Report not found" });
-
-        // const temp_user = await User.findOne({ user_id: temp_report.submitted_by });
-        // if (!temp_user) return res.status(404).json({ success: false, error: "User not found" });
-
-        // // Step 3: Create Wallet Using Stored Private Key (Connected to Provider) - ethers v5
-        // const wallet = new ethers.Wallet(temp_user.private_key, provider);
-
-        // // Step 4: Connect Wallet to Contract & Submit Report - ethers v5
-        // const participateWithSigner = participate.connect(wallet);
-        // const tx = await participateWithSigner.submitReport(report_id);
-        // await tx.wait();
-
-        // // Step 5: Fetch & Update User Balance - ethers v5
-        // const new_balance = await campusToken.balanceOf(temp_user.account);
-        // const bal_in_eth = ethers.utils.formatEther(new_balance);
-
-        // temp_user.tokens = parseFloat(bal_in_eth);
-        // await temp_user.save();
 
     } catch (error) {
         console.error("❌ Error updating report:", error.message);
@@ -166,15 +144,15 @@ app.post("/api/report/details", async (req, res) => {
 
 
 
-  app.get("/api/reports", async (req, res) => {
-    try {
-      const reports = await Report.find({ status: "pending" });
-      res.json(reports);
-    } catch (error) {
-      console.error("❌ Error fetching reports in index:", error);
-      res.status(500).json({ success: false, error: "Failed to fetch reports." });
-    }
-  });
+  // app.get("/api/reports", async (req, res) => {
+  //   try {
+  //     const reports = await Report.find({ status: "pending" });
+  //     res.json(reports);
+  //   } catch (error) {
+  //     console.error("❌ Error fetching reports in index:", error);
+  //     res.status(500).json({ success: false, error: "Failed to fetch reports." });
+  //   }
+  // });
 
 
   app.post("/api/validate", async (req, res) => {
@@ -212,6 +190,33 @@ app.post("/api/report/details", async (req, res) => {
       res.status(500).json({ success: false, error: "Validation failed." });
     }
   });
+
+
+  app.get("/api/reports/unvalidated", async (req, res) => {
+    try {
+        const { validator_id } = req.query;
+        if (!validator_id) {
+            return res.status(400).json({ success: false, error: "Validator ID is required." });
+        }
+
+        // Fetch all reports
+        const allReports = await Report.find();
+
+        // Fetch reports already validated by the user
+        const validatedReports = await Validation.find({ validator_id }).select("report_id");
+
+        // Extract report IDs from validation records
+        const validatedReportIds = validatedReports.map(v => v.report_id);
+
+        // Filter reports to exclude validated ones
+        const unvalidatedReports = allReports.filter(report => !validatedReportIds.includes(report.report_id));
+
+        res.json({ success: true, reports: unvalidatedReports });
+    } catch (error) {
+        console.error("❌ Error fetching unvalidated reports:", error);
+        res.status(500).json({ success: false, error: "Failed to fetch reports." });
+    }
+});
 
 // Start Server
 

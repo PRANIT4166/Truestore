@@ -46,8 +46,12 @@ const Validate = () => {
       } else {
         setUser(currentUser);
         try {
-          const rep = await fetchReports(); // ✅ Fetch reports using backend function
-          if (rep) setReports(rep);
+          const rep = await fetchReports(userData?.user_id); // ✅ Fetch reports using backend function
+          if (rep.success)
+            {
+              console.log("reports fetched:",rep.success,rep.reports);
+              setReports(rep.reports);
+            } 
           } catch (error) {
               console.error("❌ Error fetching reports: in page", error);
           }
@@ -106,7 +110,7 @@ const Validate = () => {
   
           {/* Validation Grid */}
           <div className="dashboard-grid-val">
-            {reports.length > 0 ? (
+            {(reports.length > 0 ) ? (
               reports.map((report) => (
                 <div key={report._id} className="card validate-card">
                   <h3>Report #{report.report_id}</h3>
