@@ -143,18 +143,6 @@ app.post("/api/report/details", async (req, res) => {
 });
 
 
-
-  // app.get("/api/reports", async (req, res) => {
-  //   try {
-  //     const reports = await Report.find({ status: "pending" });
-  //     res.json(reports);
-  //   } catch (error) {
-  //     console.error("❌ Error fetching reports in index:", error);
-  //     res.status(500).json({ success: false, error: "Failed to fetch reports." });
-  //   }
-  // });
-
-
   app.post("/api/validate", async (req, res) => {
     const { report_id, validator_id, vote } = req.body;
   
@@ -180,9 +168,6 @@ app.post("/api/report/details", async (req, res) => {
       });
   
       await validation.save();
-
-      // report.status = vote ? "verified" : "rejected";
-      // await report.save();
 
       res.json({ success: true, message: `Report validation saved successfully.` });
     } catch (error) {
